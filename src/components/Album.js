@@ -88,6 +88,15 @@ class Album extends Component {
     this.setState({ currentTime: newTime });
   }
 
+  formatTime(seconds) {
+    if (isNaN(seconds)) {
+      return "-:--";
+    }
+    let M = Math.floor( seconds/60 );
+    let SS = (seconds % 60).toFixed(2);
+    return M + ":" + SS;
+  }
+
   render() {
     return (
       <section className="album">
@@ -117,7 +126,7 @@ class Album extends Component {
                     </botton>
                   </td>
                   <td className="song-title">{song.title}</td>
-                  <td className="song-duration">{song.duration}</td>
+                  <td className="song-duration">{this.formatTime(song.duration)}</td>
                 </tr>
               )
             }
@@ -132,6 +141,7 @@ class Album extends Component {
           handlePrevClick={() => this.handlePrevClick()}
           handleNextClick={() => this.handleNextClick()}
           handleTimeChange={(e) => this.handleTimeChange(e)}
+          formatTime={(e) => this.formatTime(e) }
         />
       </section>
     );
